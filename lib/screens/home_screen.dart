@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-  final void Function(String)? onCategoryTap; // 카테고리 클릭 콜백
+  final void Function(String)? onCategoryTap;
+  final VoidCallback? onSearchTap; // ← 꼭 추가
 
-  const HomeScreen({super.key, this.onCategoryTap});
+  const HomeScreen({super.key, this.onCategoryTap, this.onSearchTap});
 
   Widget _buildCategoryBox(String title, String imageAsset) {
     return GestureDetector(
       onTap: () {
-        if (onCategoryTap != null) onCategoryTap!(title); // 콜백 호출
+        if (onCategoryTap != null) onCategoryTap!(title);
       },
       child: Column(
         children: [
@@ -42,10 +43,13 @@ class HomeScreen extends StatelessWidget {
         elevation: 1,
         title: Image.asset('assets/images/logo.png', height: 50),
         centerTitle: true,
-        actions: const [
+        actions: [
           Padding(
-            padding: EdgeInsets.only(right: 20.0),
-            child: Icon(Icons.search, color: Colors.black, size: 32),
+            padding: const EdgeInsets.only(right: 20.0),
+            child: IconButton(
+              icon: const Icon(Icons.search, color: Colors.black, size: 32),
+              onPressed: onSearchTap, // 여기에만 씁니다!
+            ),
           ),
         ],
       ),
@@ -86,7 +90,6 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   _buildCategoryBox('컴포트핏', 'assets/images/fit4.jpg'),
                   _buildCategoryBox('머슬핏', 'assets/images/fit5.jpg'),
-                  // 전체 카테고리 박스
                   GestureDetector(
                     onTap: () {
                       if (onCategoryTap != null) onCategoryTap!('전체');
@@ -126,7 +129,6 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 30),
-              // 확장 영역 (추천 상품 등)
             ],
           ),
         ),

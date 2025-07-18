@@ -3,7 +3,8 @@ import 'screens/home_screen.dart';
 import 'screens/feed_screen.dart';
 import 'screens/cart_screen.dart';
 import 'screens/my_screen.dart';
-import 'screens/product_list_page.dart'; // 상품 리스트 페이지 import
+import 'screens/search_screen.dart';
+import 'screens/product_list_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -26,11 +27,10 @@ class MainTabNavigator extends StatefulWidget {
 
 class _MainTabNavigatorState extends State<MainTabNavigator> {
   int _currentIndex = 0;
-  String? _selectedCategory; // 상품리스트 진입 시 카테고리 저장
+  String? _selectedCategory;
 
   Widget _getBody() {
     if (_selectedCategory != null) {
-      // 상품리스트 화면
       return ProductListPage(
         initialFit: _selectedCategory!,
         onBack: () => setState(() => _selectedCategory = null),
@@ -42,6 +42,7 @@ class _MainTabNavigatorState extends State<MainTabNavigator> {
         return HomeScreen(
           onCategoryTap: (category) =>
               setState(() => _selectedCategory = category),
+          onSearchTap: () => setState(() => _currentIndex = 4), // 돋보기 클릭 시!
         );
       case 1:
         return const FeedScreen();
@@ -49,6 +50,8 @@ class _MainTabNavigatorState extends State<MainTabNavigator> {
         return const CartScreen();
       case 3:
         return const MyScreen();
+      case 4:
+        return const SearchScreen(); // 검색화면
       default:
         return const Center(child: Text("NOT FOUND"));
     }
@@ -59,7 +62,7 @@ class _MainTabNavigatorState extends State<MainTabNavigator> {
     return Scaffold(
       body: _getBody(),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
+        currentIndex: _currentIndex > 3 ? 0 : _currentIndex, // 4일 때도 홈 선택된 것처럼
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.black54,
         type: BottomNavigationBarType.fixed,
@@ -85,7 +88,7 @@ class _MainTabNavigatorState extends State<MainTabNavigator> {
         ],
         onTap: (index) => setState(() {
           _currentIndex = index;
-          _selectedCategory = null; // 탭 이동 시 상품리스트 닫기
+          _selectedCategory = null;
         }),
       ),
     );

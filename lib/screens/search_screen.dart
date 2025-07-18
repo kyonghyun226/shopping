@@ -20,7 +20,6 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // 커스텀 AppBar 느낌의 상단
       body: Column(
         children: [
           // 상단 검색 박스 (앱바 아님! 직접 만듦)
@@ -61,32 +60,6 @@ class SearchScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 17, color: Colors.black87),
               ),
             ),
-          ),
-        ],
-      ),
-      // 하단 네비게이션
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.black54,
-        type: BottomNavigationBarType.fixed,
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: 'HOME',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list_alt_outlined),
-            label: '피드',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag_outlined),
-            label: '장바구니',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: 'MY',
           ),
         ],
       ),
